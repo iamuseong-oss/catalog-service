@@ -4,40 +4,36 @@ on: push
 jobs:
 
   build:
-    name: Build and Test
+    name: 빌드 및 테스트
     runs-on: ubuntu-latest
     permissions: 
       contents: read
       security-events: write
     steps:
-      - name: Checkout source code
+      - name: 소스코드 체크아웃
         uses: actions/checkout@v5
-
       - name: Set up JDK
         uses: actions/setup-java@v5
         with:
           distribution: microsoft
           java-version: 17
-          cache: gradle
-          
-          
-      - name: Code vulnerability scanning
+          cache: gradle        
+      - name: 빌드
+        run: | 
+          chmod +x gradlew
+          ./gradlew build
+      - name: 코드 취약성 검사
         uses: anchore/scan-action@v6
         id: scan
         with:
           path: "${{ github.workspace }}"
           output-format: sarif
-          severity-cutoff: low
+          severity-cutoff: high
           fail-build: false
-
-      - name: Upload vulnerability report
+      - name: 취약성 보고
         uses: github/codeql-action/upload-sarif@v3
         if: success() || failure()
         with: 
           sarif_file: ${{ steps.scan.outputs.sarif }}
 
-      - name: Build, unit tests and outputs.sarif
-        run: |
-          chmod +x gradlew
-          ./gradlew build
               
