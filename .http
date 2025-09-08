@@ -1,0 +1,8 @@
+POST http://localhost:9001/books
+Content-Type: application/json
+
+{
+  "title": "Northern Lights",
+  "isbn": "123456891",
+  "price": 9.98
+}
