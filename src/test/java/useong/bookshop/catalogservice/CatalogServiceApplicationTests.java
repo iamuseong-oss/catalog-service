@@ -17,7 +17,13 @@ class CatalogServiceApplicationTests {
 
 	@Test
 	void whenPostRequestThenBookCreated() {
-		var expectedBook = new Book("1231231231", "Title", "Author", 9.90);
+		var expectedBook = Book
+				.builder()
+				.isbn("1231231231")
+				.titie("title")
+				.author("Author")
+				.price(9.90)
+				.build();
 
 		webTestClient
 				.post()
@@ -27,7 +33,7 @@ class CatalogServiceApplicationTests {
 				.expectStatus().isCreated()
 				.expectBody(Book.class).value(actualBody -> {
 					Assertions.assertThat(actualBody).isNotNull();
-					Assertions.assertThat(actualBody.isbn()).isEqualTo(expectedBook.isbn());
+					Assertions.assertThat(actualBody.getIsbn()).isEqualTo(expectedBook.getIsbn());
 				});
 	}
 

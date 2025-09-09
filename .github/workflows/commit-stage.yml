@@ -2,7 +2,6 @@ name: Commit Stage
 on: push
 
 jobs:
-
   build:
     name: 빌드 및 테스트
     runs-on: ubuntu-latest
