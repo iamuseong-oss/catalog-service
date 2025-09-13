@@ -1,3 +1,7 @@
+GET http://localhost:9001/books
+
+###
+
 POST http://localhost:9001/books
 Content-Type: application/json
 

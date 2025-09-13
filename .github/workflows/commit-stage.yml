@@ -1,9 +1,14 @@
 name: Commit Stage
 on: push
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: iamuseong-oss/catalog-service
+  VERSION: latest
+
 jobs:
   build:
-    name: 빌드 및 테스트
+    name: 우분투 실행
     runs-on: ubuntu-latest
     permissions: 
       contents: read
@@ -34,5 +39,5 @@ jobs:
         if: success() || failure()
         with: 
           sarif_file: ${{ steps.scan.outputs.sarif }}
-
+    
               

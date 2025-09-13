@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import useong.bookshop.catalogservice.domain.Book;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("integration")
 class CatalogServiceApplicationTests {
 
 	@Autowired
@@ -20,7 +22,7 @@ class CatalogServiceApplicationTests {
 		var expectedBook = Book
 				.builder()
 				.isbn("1231231231")
-				.titie("title")
+				.title("title")
 				.author("Author")
 				.price(9.90)
 				.build();

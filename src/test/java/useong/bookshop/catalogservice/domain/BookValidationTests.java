@@ -24,9 +24,8 @@ public class BookValidationTests {
   @Test
   void whenAllFieldsCorrectThenValidationSucceeds() {
     var book = Book.builder()
-        .id(null)
         .isbn("1234567890")
-        .titie("Title")
+        .title("Title")
         .author("Author")
         .price(9.90)
         .build();
@@ -37,9 +36,8 @@ public class BookValidationTests {
   @Test
   void whenIsbnDefinedButIncorrectThenValidationFails() {
     var book = Book.builder()
-        .id(null)
-        .isbn("1234567890")
-        .titie("Title")
+        .isbn("1sas234890")
+        .title("Title")
         .author("Author")
         .price(9.90)
         .build();
