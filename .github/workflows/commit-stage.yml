@@ -62,3 +62,24 @@ jobs:
           chmod +x gradlew
           ./gradlew bootBuildImage \
             --imageName ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+      - name: OCI image 취약성 검사
+        uses: anchore/scan-action@v6
+        id: scan
+        with:
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          output-format: sarif
+          fail-build: false
+          severity-cutoff: high
+      - name: 취약성 보고
+        uses: github/codeql-action/upload-sarif@v3
+        if: success() || failure()
+        with: 
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+      - name: 로그인 컨테이너 레지스트리
+        uses: docker/login-action@3.50
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: 컨테이너 이미지 배포
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
