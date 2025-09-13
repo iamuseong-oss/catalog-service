@@ -1,20 +1,10 @@
 spring:
   application:
     name: catalog-service
-  sql:
-    init:
-      mode: always
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/bookshopdb
-    username: master
-    password: master1234
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: none
-  flyway:
-    enabled: true
+  profiles:
+    active:
+    - test
+
 server:
   port: 9001
   tomcat:
@@ -23,3 +13,42 @@ server:
     threads:
       max: 50
       min-spare: 5
+
+---
+
+spring: 
+  config:
+    activate:
+      on-profile:
+      - test
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/bookshopdb
+    username: master
+    password: master1234
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  flyway:
+    enabled: false
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile:
+      - prod
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:pg://localhost:5432/bookshopdb
+    username: master
+    password: master1234
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+

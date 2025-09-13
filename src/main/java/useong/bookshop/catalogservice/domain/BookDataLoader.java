@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-@Profile("testdata")
+@Profile("test")
 public class BookDataLoader {
 
   private final BookRepository bookRepository;
