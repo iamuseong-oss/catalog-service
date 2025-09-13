@@ -76,7 +76,7 @@ jobs:
         with: 
           sarif_file: ${{ steps.scan.outputs.sarif }}
       - name: 로그인 컨테이너 레지스트리
-        uses: docker/login-action@3.50
+        uses: docker/login-action@3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
