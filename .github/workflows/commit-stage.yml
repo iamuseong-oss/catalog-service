@@ -45,7 +45,7 @@ jobs:
           kubectl: 1.34.0
           kubeconform: 0.7.0
           command: |
-            kubeconform -strict -output text k8s/
+            kubeconform -strict -output text -summary k8s/
   package:
     name: 패키지 그리고 퍼블리시
     if: ${{ github.ref == 'refs/heads/main' }}
