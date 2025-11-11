@@ -39,12 +39,12 @@ jobs:
         with:
           sarif_file: ${{ steps.scan.outputs.sarif }}
       - name: Setup tools
-        uses: alexellis/setup-arkade@v3
+        uses: alexellis/setup-arkade@v2
       - name: Install tools
         uses: alexellis/arkade-get@master
         with:
           kustomize: latest
-          kubeconfirm: latest
+          kubeconform: latest
       - name: Validate kubernetes manifests
         run: |
           kustomize build k8s | kubeconfirm --strict
