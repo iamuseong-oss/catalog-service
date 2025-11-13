@@ -19,7 +19,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
     steps:
-      - run: echo "Running functional acceotance tests"
+      - run: echo "Running functional acceptance tests"
   performance:
     name: Performance Tests
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -35,7 +35,7 @@ jobs:
   deliver:
     name: Deliver release candidate to production
     needs: [ functional, performance, security ]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Deliver application to production
         uses: peter-evans/repository-dispatch@v3
@@ -43,8 +43,9 @@ jobs:
           token: ${{ secrets.DISPATCH_TOKEN }}
           repository: ${{ env.OWNER }}/${{ env.DEPLOY_REPO }}
           event-type: app_delivery
-          client-payload: '{
-            "app_image": "${{ env.REGISTRY }}/${{ env.OWNER }}/${{ env.APP_REPO }}",
-            "app_name": "${{ env.APP_REPO }}",
-            "app_version": "${{ env.VERSION }}"
-          }'
+          client-payload: |
+            {
+              "app_image": "${{ env.REGISTRY }}/${{ env.OWNER }}/${{ env.APP_REPO }}",
+              "app_name": "${{ env.APP_REPO }}",
+              "app_version": "${{ env.VERSION }}"
+            }
